@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || root.child('users').child(auth.uid).child('role').val() == 'admin')",
+        ".write": "auth != null && auth.uid == $uid && ((!data.exists() && newData.child('role').val() == 'customer') || (data.exists() && data.child('role').val() == 'customer' && newData.child('role').val() == 'customer'))",
+        "role": {".validate": "newData.isString() && (newData.val() == 'customer' || newData.val() == 'admin')"}
+      }
+    },
+    "bookings": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() == 'admin'",
+      "$bookingId": {
+        ".write": "auth != null && (( !data.exists() && newData.child('uid').val() == auth.uid && root.child('users').child(auth.uid).child('role').val() == 'customer') || (data.exists() && root.child('users').child(auth.uid).child('role').val() == 'admin'))",
+        ".validate": "newData.hasChildren(['id','uid','phone','name','service','date','time','address','status','createdAt'])",
+        "status": {".validate": "newData.isString() && (newData.val() == 'Pending' || newData.val() == 'Confirmed' || newData.val() == 'Technician Assigned' || newData.val() == 'On The Way' || newData.val() == 'Completed' || newData.val() == 'Cancelled')"},
+        "uid": {".validate": "newData.isString()"},
+        "phone": {".validate": "newData.isString() && newData.val().matches(/^[0-9]{10}$/)"}
+      }
+    },
+    "userBookings": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        "$bookingId": {
+          ".write": "auth != null && (( !data.exists() && auth.uid == $uid && newData.child('uid').val() == auth.uid) || (data.exists() && (auth.uid == $uid || root.child('users').child(auth.uid).child('role').val() == 'admin')))"
+        }
+      }
+    },
+    "adminTokens": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() == 'admin'",
+      "$token": {".write": "auth != null && root.child('users').child(auth.uid).child('role').val() == 'admin' && newData.isString() && newData.val().length > 20"}
+    }
+  }
+}

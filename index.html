@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#062b66">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AC WORKS">
+<link rel="apple-touch-icon" href="ac-works-poster.png">
+<link rel="manifest" href="manifest.json">
+<title>AC WORKS - AC Service Booking</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="brand">
+    <div class="logo">AC</div>
+    <div><b>AC WORKS</b><small>Cooling Your World</small></div>
+  </div>
+  <div class="headerActions"><button class="ownerBtn" onclick="go('account')">Customer Login</button><button class="ownerBtn" onclick="go('admin')">Owner Login</button><a href="tel:9505225027" class="call">☎ 9505225027</a></div>
+</header>
+
+<main>
+<section id="home" class="screen active">
+  <div class="hero">
+    <img src="ac-works-poster.png" alt="AC WORKS">
+    <div class="heroText">
+      <span>ONLINE SERVICE • 10 AM - 10 PM</span>
+      <h1>AC service at your doorstep.</h1>
+      <p>Sales • Service • Installation • Repair</p>
+      <button class="primary" onclick="go('book')">Book Service</button>
+      <a class="lightBtn" target="_blank" href="https://wa.me/919505225027?text=Hello%20AC%20WORKS,%20I%20want%20to%20book%20an%20AC%20service.">WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="sectionTitle"><small>AC WORKS</small><h2>Services</h2><p>Professional doorstep AC service.</p></div>
+  <div id="homeServices" class="cards"></div>
+
+  <div class="infoBox">
+    <b>📞 Online booking</b>
+    <b>🕙 10:00 AM - 10:00 PM</b>
+    <b>💳 Cash • UPI • Card • Online</b>
+    <b>📍 Doorstep service</b>
+  </div>
+</section>
+
+<section id="services" class="screen">
+  <div class="sectionTitle"><small>AC WORKS</small><h2>All Services</h2><p>Starting prices. Final charge depends on the actual work.</p></div>
+  <div id="allServices" class="cards"></div>
+</section>
+
+<section id="account" class="screen">
+  <div class="sectionTitle"><small>AC WORKS ACCOUNT</small><h2>Customer Login</h2><p>Create an account so your bookings stay synced on your phone and in the AC WORKS cloud.</p></div>
+  <div id="customerAccountBox" class="box">
+    <label>Full Name<input id="customerName" type="text" placeholder="Your name" autocomplete="name"></label>
+    <label>Email<input id="customerEmail" type="email" placeholder="you@example.com" autocomplete="username"></label>
+    <label>Password<input id="customerPassword" type="password" placeholder="At least 6 characters" autocomplete="current-password"></label>
+    <div class="adminActions"><button id="customerLoginBtn" class="primary" onclick="customerLogin()">Customer Login</button><button id="customerSignupBtn" class="smallBtn" onclick="customerSignup()">Create Customer Account</button></div>
+    <small class="hint">Your email/password is only used for your AC WORKS account. Never share your password.</small>
+  </div>
+</section>
+
+<section id="book" class="screen">
+  <div class="sectionTitle"><small>BOOK ONLINE</small><h2>Book Your AC Service</h2><p>No account or password. Your mobile number is your booking contact.</p></div>
+
+  <form id="bookingForm">
+    <div class="box">
+      <h3>1. Mobile Number</h3>
+      <label>Customer Mobile Number
+        <input id="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="Enter 10-digit mobile number" required>
+      </label>
+      <small class="hint">We will use this number for booking confirmation and service contact.</small>
+    </div>
+
+    <div class="box">
+      <h3>2. Select Service</h3>
+      <div id="serviceChoices" class="choices"></div>
+    </div>
+
+    <div class="box">
+      <h3>3. AC Details</h3>
+      <label>AC Type
+        <select id="acType" required>
+          <option value="">Select</option><option>Split AC</option><option>Window AC</option><option>Ductable AC</option>
+        </select>
+      </label>
+      <label>Brand
+        <select id="brand" required>
+          <option value="">Select</option><option>Daikin</option><option>LG</option><option>Samsung</option><option>Voltas</option><option>Hitachi</option><option>Panasonic</option><option>Other</option>
+        </select>
+      </label>
+      <label>Number of ACs
+        <input id="count" type="number" min="1" max="10" value="1" required>
+      </label>
+    </div>
+
+    <div class="box">
+      <h3>4. Service Location</h3>
+      <label>Customer Name
+        <input id="name" type="text" placeholder="Full name" required>
+      </label>
+      <label>Service Address
+        <textarea id="address" rows="3" placeholder="House, street, area, city" required></textarea>
+      </label>
+      <label>Landmark
+        <input id="landmark" type="text" placeholder="Nearby landmark">
+      </label>
+    </div>
+
+    <div class="box">
+      <h3>5. Date & Time</h3>
+      <label>Preferred Date
+        <input id="date" type="date" required>
+      </label>
+      <label>Preferred Time
+        <select id="time" required>
+          <option value="">Select</option>
+          <option>10:00 AM - 12:00 PM</option>
+          <option>12:00 PM - 2:00 PM</option>
+          <option>2:00 PM - 4:00 PM</option>
+          <option>4:00 PM - 6:00 PM</option>
+          <option>6:00 PM - 8:00 PM</option>
+          <option>8:00 PM - 10:00 PM</option>
+        </select>
+      </label>
+      <label>Problem / Notes
+        <textarea id="notes" rows="3" placeholder="Example: cooling is low, water leaking, noise, etc."></textarea>
+      </label>
+    </div>
+
+    <div class="box">
+      <h3>6. Payment Preference</h3>
+      <div class="payChoices">
+        <label><input type="radio" name="payment" value="Cash" checked> Cash</label>
+        <label><input type="radio" name="payment" value="UPI"> UPI</label>
+        <label><input type="radio" name="payment" value="Card"> Card</label>
+        <label><input type="radio" name="payment" value="Online Payment"> Online Payment</label>
+      </div>
+      <small class="hint">Final service charge depends on inspection and actual work.</small>
+    </div>
+
+    <div class="estimate">
+      <div><small>Estimated starting amount</small><strong id="price">Select service</strong></div>
+      <button class="primary" type="submit">Confirm Booking</button>
+    </div>
+  </form>
+</section>
+
+<section id="bookings" class="screen">
+  <div class="sectionTitle"><small>CUSTOMER</small><h2>My Bookings</h2><p>Your bookings are stored in Firebase and cached on this phone.</p></div>
+  <div class="lookup">
+    <input id="lookupPhone" type="tel" inputmode="numeric" maxlength="10" placeholder="Customer mobile number">
+    <button class="primary" onclick="lookupBookings()">View</button>
+  </div>
+  <div id="bookingsList"></div>
+</section>
+
+<section id="admin" class="screen">
+  <div class="sectionTitle"><small>OWNER</small><h2>Nabi Admin</h2><p>Secure owner dashboard for AC WORKS bookings.</p></div>
+
+  <div id="adminLogin" class="box">
+    <h3>Owner Login</h3>
+    <label>Email
+      <input id="adminEmail" type="email" placeholder="Nabi's admin email" autocomplete="username">
+    </label>
+    <label>Password
+      <input id="adminPassword" type="password" placeholder="Password" autocomplete="current-password">
+    </label>
+    <button class="primary fullBtn" onclick="adminLogin()">Login to Admin</button>
+    <small class="hint">Use the Firebase Authentication email/password account created for the owner.</small>
+  </div>
+
+  <div id="adminPanel" class="hidden">
+    <div class="adminTop">
+      <div><b id="adminUserEmail"></b><small>Owner account</small></div>
+      <button class="smallBtn" onclick="adminLogout()">Logout</button>
+    </div>
+    <div class="notificationBox">
+      <div><b>🔔 Phone notifications</b><small id="notificationStatus">Not enabled</small></div>
+      <button class="primary" onclick="enableNotifications()">Enable</button>
+    </div>
+    <div class="stats">
+      <div><b id="total">0</b><small>Total</small></div>
+      <div><b id="pending">0</b><small>Pending</small></div>
+      <div><b id="confirmed">0</b><small>Confirmed</small></div>
+      <div><b id="done">0</b><small>Completed</small></div>
+    </div>
+    <div class="filterRow">
+      <select id="adminFilter" onchange="renderAdmin()">
+        <option value="All">All bookings</option><option>Pending</option><option>Confirmed</option><option>Technician Assigned</option><option>On The Way</option><option>Completed</option><option>Cancelled</option>
+      </select>
+      <button class="smallBtn" onclick="renderAdmin()">Refresh</button>
+    </div>
+    <div id="adminList"></div>
+  </div>
+</section>
+</main>
+
+<nav class="bottom">
+  <button onclick="go('home')" data-nav="home">⌂<span>Home</span></button>
+  <button onclick="go('services')" data-nav="services">❄<span>Services</span></button>
+  <button onclick="go('book')" data-nav="book" class="bookNav">＋<span>Book</span></button>
+  <button onclick="go('bookings')" data-nav="bookings">▣<span>Bookings</span></button>
+</nav>
+
+<div id="toast" class="toast"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
