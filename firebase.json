@@ -1,5 +1,0 @@
-{
-  "database": {"rules": "database.rules.json"},
-  "hosting": {"public": ".", "ignore": ["firebase.json", "database.rules.json", "functions/**", "README.txt"]},
-  "functions": {"source": "functions"}
-}
